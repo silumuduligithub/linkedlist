@@ -1,0 +1,39 @@
+// floyed cycle deatction algorithem.
+ // to solve this question we can use hashmap but in hashmap the space complexity O(n). it can be more optimized and it can be solved in constant space.using floyed algorithem, to using this algorithem we can find is there any loop is present inside the linkedlist.
+ // in this algorithem we take to pointer slow and fast, in a single time slow pinter can move one step and fast pointer can move 2 steps.at the time of moving if they meet to each other that means there is a cycle present.
+ 
+// public class Solution {
+//     public boolean hasCycle(ListNode head) {
+//         if(head == null || head.next == null )
+//             return false;
+//         ListNode slow = head;
+//         ListNode fast = head;
+//         while(fast != null && fast.next != null)
+//         {
+//             slow = slow.next;   
+//             fast = fast.next.next;
+//             if(slow == fast)
+//             {
+//                 return true;
+//             }
+//         }
+//         return false;
+//     }
+// }
+// using hashMap
+public class Solution
+{
+   public boolean hasCycle(ListNode head) {
+       if(head == null || head.next == null) return false;
+       HashMap<ListNode,Integer> cyclemap = new HashMap<>();
+       while(head != null)
+       {
+            if(cyclemap.containsKey(head))
+                return true;
+            else 
+                cyclemap.put(head, 1);
+            head = head.next;
+       }
+       return false;
+   } 
+}
