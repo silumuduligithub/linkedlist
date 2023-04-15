@@ -1,0 +1,49 @@
+class Solution {
+    public static int findLength(ListNode head)
+    {
+        ListNode temp = head;
+        int len = 0;
+        while(temp != null)
+        {
+            len ++;
+            temp = temp.next;
+        }
+        return len;
+    }
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        int length = findLength(head);
+        int part = length / k;
+        int extraNode = length % k;
+        ListNode  al[] = new ListNode[k];
+        int i = 0;
+        ListNode cur = head;
+        ListNode prev = null;
+        while(head != null)
+        {
+            int eachpart = part;
+            al[i++] = cur;
+            while(eachpart > 0)
+            {
+                prev = cur;
+                cur = cur.next;
+                eachpart --;
+            }
+            if(extraNode > 0 && cur != null)
+            {
+                prev = cur;
+                cur = cur.next;
+                extraNode --;
+            }
+            if(prev != null)
+            {
+                head = cur;
+                prev.next = null;
+            }
+        }
+        if(al.length != k)
+        {
+            al[i++] = null;
+        }
+        return al;
+    }
+}
