@@ -1,0 +1,63 @@
+class MyLinkedList {
+    class ListNode{
+        int val;
+        ListNode next;
+        ListNode (int val){
+            this.val = val;
+        }
+    }
+    int size;
+    ListNode dummy;
+    public MyLinkedList() {
+        dummy = new ListNode(-1);
+        size = 0;
+    }
+    
+    public int get(int index) {
+        if(index >= size) return -1 ;
+        ListNode cur = dummy;
+        for(int i = 0; i <= index; i++){
+            cur = cur.next;
+        }
+        return cur.val;
+    }
+    
+    public void addAtHead(int val) {
+        ListNode ne = new ListNode(val);
+        ne.next = dummy.next;
+        dummy.next = ne;
+        size++;
+    }
+    
+    public void addAtTail(int val) {
+        ListNode tail = new ListNode(val);
+        ListNode cur = dummy;
+        while(cur.next != null){
+            cur =cur.next;
+        }
+        cur.next = tail;
+        size++;
+    }
+    
+    public void addAtIndex(int index, int val) {
+        if(index > size)return ;
+        ListNode ai = new ListNode(val);
+        ListNode cur = dummy;
+        for(int i = 0; i < index; i++){
+            cur = cur.next;
+        }
+        ai.next = cur.next;
+        cur.next = ai;
+        size++;
+    }
+    
+    public void deleteAtIndex(int index) {
+        ListNode cur = dummy;
+        if(index >= size)return;
+        for(int i = 0; i < index; i++){
+            cur = cur.next;
+        }
+        cur.next = cur.next.next;
+        size--;
+    }
+}
