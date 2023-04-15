@@ -1,0 +1,41 @@
+
+class Solution {
+    public void copyList(Node head){
+        Node cur = head;
+        while(cur != null){
+            Node forw = cur.next;
+            Node newcur = new Node(cur.val);
+            cur.next = newcur;
+            newcur.next = forw;
+            cur = forw;
+        }
+    }
+    public void copyRandom(Node head){
+        Node cur = head;
+        // Node rand = cur.random;
+        while(cur != null){
+            Node rand = cur.random;
+            if(rand != null)
+                cur.next.random = rand.next;
+            cur = cur.next.next;
+        }
+    }
+    public Node extractCopy(Node head){
+        Node dummy = new Node(-1);
+        Node prev = dummy, cur = head;
+        while(cur != null){
+            prev.next = cur.next;
+            cur.next = cur.next.next;
+            cur = cur.next;
+            prev = prev.next; 
+        }
+        return dummy.next;
+    }
+    public Node copyRandomList(Node head) {
+        if(head == null) return null;
+        copyList(head);
+        copyRandom(head);
+        Node newhead = extractCopy(head);
+        return newhead;
+    }
+}
