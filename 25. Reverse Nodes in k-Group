@@ -1,0 +1,23 @@
+class Solution {
+    public void reverse(ListNode start, ListNode end){
+        ListNode cur = start, prev = null, next = null;
+        while(prev != end){
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+    }
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || head.next == null || k == 1)return head;
+        ListNode start = head, end = head;
+        for(int i = 1; i < k; i++){
+            end = end.next;
+            if(end == null)return head;
+        }
+        ListNode cur = reverseKGroup(end.next, k);
+        reverse(start, end);
+        start.next = cur;
+        return end;
+    }
+}
