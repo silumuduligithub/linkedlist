@@ -1,0 +1,8 @@
+class Solution {
+    // here the question says that you have given a node, you have not the head of the linked list , you have to delete given node.in logically we can delete the node we have two pointer that is the head and the given node. but here only we have the node so 
+    // in this situation we have to swap the next to data to the given data and delete the next node, but if we apply this logic it will not able to delete the lastnode all the textcases will be passes but this is not a good logic 
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next =node.next.next; 
+    }
+}
