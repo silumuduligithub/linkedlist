@@ -1,0 +1,23 @@
+class Solution {
+    public Node connect(Node root) {
+        if(root == null)return null;
+        Queue<Node> que = new LinkedList<>();
+        que.add(root);
+        while(que.size() > 0){
+            int size = que.size();
+            Node nextRight = null;
+            while(size-- > 0){
+                Node head = que.remove();
+                head.next = nextRight;
+                nextRight = head;
+                if(head.right != null){
+                    que.add(head.right);
+                }
+                if(head.left != null){
+                    que.add(head.left);
+                }
+            }
+        }
+        return root;
+    }
+}
