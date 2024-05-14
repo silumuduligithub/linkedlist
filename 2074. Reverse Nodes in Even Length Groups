@@ -1,0 +1,81 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverse(ListNode head){
+        ListNode cur = head, prev = null, next = null;
+        while(cur != null){
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        return prev;
+    }
+    public ListNode reverseEvenLengthGroups(ListNode head) {
+        if(head == null || head.next == null)return head;
+        ListNode temp = head, prev = null;
+        int count = 1;
+        while(temp != null){
+            if(count % 2 == 0){
+                int curCount = count;
+                ListNode curHead = temp;
+                while(curCount > 1 && temp != null){
+                    temp = temp.next;
+                    curCount--;
+                }
+                if(temp  != null){
+                    prev.next = null;
+                    ListNode next = temp.next;
+                    temp.next = null;
+                    ListNode rev = reverse(curHead);
+                    prev.next = rev;
+                    while(rev.next != null){
+                        rev = rev.next;
+                    }
+                    rev.next = next;
+                    prev = rev;
+                    temp = next;
+                }else{
+                    ListNode next = prev.next;
+                    prev.next = null;
+                    ListNode cur = checkIsLastGroup(next, count - curCount);
+                    prev.next = cur;
+                    return head;
+                }
+            }else{
+                int curCount = count;
+                ListNode last = prev;
+                while(curCount > 0 && temp != null){
+                    prev = temp;
+                    temp = temp.next;
+                    curCount--;
+                }
+                if(temp == null){
+                    ListNode next = last.next;
+                    last.next = null;
+                    System.out.println(prev.val);
+                    ListNode cur = checkIsLastGroup(next, count - curCount);
+                    last.next = cur;
+                    
+                    return head;
+                }
+            }
+            count++;
+        }
+        return head;
+    }
+    public ListNode checkIsLastGroup(ListNode prev, int flag){
+        if(flag % 2 == 0){
+            return reverse(prev); 
+        }
+        return prev;
+    }
+}
