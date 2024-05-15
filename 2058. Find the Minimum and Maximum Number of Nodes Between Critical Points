@@ -1,0 +1,41 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isThisAcriticalPoint(ListNode prev, ListNode head){
+        if(head.next != null && ((prev.val > head.val &&  head.next.val > head.val) || (prev.val < head.val && head.next.val < head.val)))return true;
+        return false;
+    }
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        int firstCriticalPoint = 0, prevCriticalPoint = 0, length = 1;
+        ListNode prev = null;
+        boolean flag = false;
+        int minAns = Integer.MAX_VALUE, maxAns = -1;
+        while(head != null && head.next != null){
+            if(prev != null && isThisAcriticalPoint(prev, head)){
+                System.out.println(length);
+                if(!flag){
+                    firstCriticalPoint = length;
+                    prevCriticalPoint = length;
+                    flag = true;
+                }else{
+                    int curMin = length - prevCriticalPoint;
+                    minAns = Math.min(curMin, minAns);
+                    prevCriticalPoint = length;
+                }
+            }
+            length++;
+            prev = head;
+            head = head.next;
+        }
+        maxAns = prevCriticalPoint - firstCriticalPoint;
+        return  minAns == Integer.MAX_VALUE && maxAns == 0 ?  new int[]{-1, -1} : new int[]{minAns, maxAns};
+    }
+}
